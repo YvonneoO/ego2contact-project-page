@@ -62,6 +62,9 @@ nav .links a:hover{color:var(--ink)}
 .hero .affil{color:var(--mute);font-size:15px;margin:0 0 4px}
 .hero .marks{color:var(--mute);font-size:13.5px;margin:0 0 26px}
 .abstract{font-family:var(--serif);font-size:17.5px;line-height:1.65;margin:0}
+.bib{position:relative;padding:18px 20px}
+.bib pre{margin:0;font:13px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.bib .ibtn{position:absolute;top:12px;right:12px}
 /* sections */
 section{padding:56px 0;scroll-margin-top:64px}
 section.alt{background:var(--bg2)}
@@ -210,7 +213,7 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
 <nav><div class="wrap">
   <div class="brand"><span class="grad">Ego2Contact</span></div>
   <div class="links">
-    <a href="#video">Video</a><a href="#method">Method</a><a href="#human">Human touch</a><a href="#robot">Robot adaptation</a><a href="#sim">Simulation</a><a href="#real">Real robot</a>
+    <a href="#video">Video</a><a href="#method">Method</a><a href="#human">Human touch</a><a href="#robot">Robot adaptation</a><a href="#sim">Simulation</a><a href="#real">Real robot</a><a href="#bibtex">BibTeX</a>
   </div>
   <button id="themeBtn" title="toggle theme">dark</button>
 </div></nav>
@@ -221,7 +224,7 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
   <p class="authors"><span>Qianqian Yang<sup>1</sup></span>, <span>Dayou Li<sup>2</sup></span>, <span>Bangya Liu<sup>3</sup></span>, <span>Zihao Zhu<sup>2</sup></span>, <span>Nuo Chen<sup>2</sup></span>, <span>Siyuan Xu<sup>2</sup></span>, <span>Hezhen Hu<sup>4</sup></span>, <span>Chen Yu<sup>4</sup></span>, <span>Rebecca Friesen<sup>2</sup></span>, <span>Minghui Zheng<sup>2</sup></span>, <span>Cynthia Hipwell<sup>2</sup></span>, <span>Xiaoning Qian<sup>2</sup></span>, <span>Kenji Shimada<sup>1</sup></span>, <span>Zhiwen Fan<sup>2†</sup></span></p>
   <p class="affil"><sup>1</sup>Carnegie Mellon University · <sup>2</sup>Texas A&amp;M University · <sup>3</sup>University of Wisconsin–Madison · <sup>4</sup>The University of Texas at Austin</p>
   <p class="marks"><sup>†</sup>Corresponding author</p>
-  <div class="btns"><a class="btn primary" href="#video">▶&nbsp; Video</a><a class="btn soon">Paper <small>soon</small></a><a class="btn soon">Code <small>soon</small></a></div>
+  <div class="btns"><a class="btn primary" href="#video">▶&nbsp; Video</a><a class="btn" href="https://arxiv.org/abs/2610.22932" target="_blank" rel="noopener">Paper</a><a class="btn soon">Code <small>soon</small></a><a class="btn" href="#bibtex">BibTeX</a></div>
 </header>
 
 <section id="abstract" class="wrap" style="padding:30px 24px 10px">
@@ -342,7 +345,18 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
   <div class="grid2" id="robotCards"></div>
 </section>
 
-<footer><div class="wrap"><b>Ego2Contact</b> · 2026</div></footer>
+<section id="bibtex" class="alt"><div class="wrap">
+  <h2>Citation</h2>
+  <div class="rule"></div>
+  <div class="card bib"><button class="ibtn" id="bibCopy">Copy</button><pre id="bibText">@article{yang2026ego2contact,
+  title   = {Ego2Contact: Predicting Touch from Egocentric Human Video for Contact-Rich Robot Manipulation},
+  author  = {Yang, Qianqian and Li, Dayou and Liu, Bangya and Zhu, Zihao and Chen, Nuo and Xu, Siyuan and Hu, Hezhen and Yu, Chen and Friesen, Rebecca and Zheng, Minghui and Hipwell, Cynthia and Qian, Xiaoning and Shimada, Kenji and Fan, Zhiwen},
+  journal = {arXiv preprint arXiv:2610.22932},
+  year    = {2026}
+}</pre></div>
+</div></section>
+
+<footer><div class="wrap"><b>Ego2Contact</b> · 2026 · <a href="https://arxiv.org/abs/2610.22932">arXiv:2610.22932</a></div></footer>
 
 <div class="lightbox" id="lb" hidden><div class="lb-inner"><video id="lbVid" muted autoplay loop playsinline controls></video><div class="lb-bar"><div id="lbTitle"></div><span id="lbMeta"></span><button class="lb-close" id="lbClose" title="close">✕</button></div></div></div>
 
@@ -352,6 +366,7 @@ const HUMAN = [{"key":"twist_bottle_cap","title":"Twist bottle cap","duration":4
 const ROBOT = [{"key":"bottle_cap_removal","title":"Bottle cap removal","note":"","desc":"Grasp the bottle, unscrew the cap and place it in the tray (0\u201343 s).","src":"assets/video/robot_bottle_cap_removal.mp4","poster":"assets/poster/robot_bottle_cap_removal.webp"},{"key":"test_tube_transfer","title":"Test tube transfer","note":"","desc":"Pick a test tube from the rack and insert it into the target hole (0\u201335 s).","src":"assets/video/robot_test_tube_transfer.mp4","poster":"assets/poster/robot_test_tube_transfer.webp"},{"key":"whiteboard_erasing","title":"Whiteboard erasing","note":"","desc":"Grasp the cloth, erase the doodle and put the cloth back (0\u201340 s).","src":"assets/video/robot_whiteboard_erasing.mp4","poster":"assets/poster/robot_whiteboard_erasing.webp"},{"key":"bimanual_pouring","title":"Bimanual pouring","note":"","desc":"Both hands pick up their tubes; the right hand pours into the funnel tube held by the left hand around 1:00\u20131:10 (0\u201380 s).","src":"assets/video/robot_bimanual_pouring.mp4","poster":"assets/poster/robot_bimanual_pouring.webp"}];
 const SIMVID = [{"key":"pen_cap_removal","title":"Pen cap removal","meta":"5.3 s","src":"assets/video/sim_pen_cap_removal.mp4","poster":"assets/poster/sim_pen_cap_removal.webp"},{"key":"lever_sliding","title":"Lever sliding","meta":"5.9 s","src":"assets/video/sim_lever_sliding.mp4","poster":"assets/poster/sim_lever_sliding.webp"},{"key":"bottle_cap_turning","title":"Bottle cap turning","meta":"9.3 s","src":"assets/video/sim_bottle_cap_turning.mp4","poster":"assets/poster/sim_bottle_cap_turning.webp"},{"key":"bimanual_handover","title":"Bimanual handover","meta":"5.1 s","src":"assets/video/sim_bimanual_handover.mp4","poster":"assets/poster/sim_bimanual_handover.webp"}];
 const $ = id => document.getElementById(id);
+$('bibCopy').onclick=()=>{navigator.clipboard.writeText($('bibText').textContent).then(()=>{$('bibCopy').textContent='Copied';setTimeout(()=>$('bibCopy').textContent='Copy',1500);});};
 // theme
 (function(){const root=document.documentElement,btn=$('themeBtn');const sys=()=>matchMedia('(prefers-color-scheme: dark)').matches;
  function cur(){return root.dataset.theme||(sys()?'dark':'light');}
