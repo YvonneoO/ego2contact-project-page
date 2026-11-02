@@ -54,17 +54,6 @@ nav .links a:hover{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 20px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--ink);box-shadow:var(--shadow);transition:transform .15s}
 .btn:hover{transform:translateY(-1px)}
 .btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.btn.soon{opacity:.6;cursor:default;pointer-events:none}
-.btn.soon small{font:600 10.5px var(--mono);background:var(--soft);border-radius:999px;padding:2px 7px;color:var(--mute)}
-.hero .authors{font-size:17px;line-height:1.75;margin:0 0 8px}
-.hero .authors span{white-space:nowrap}
-.hero sup{font-size:.62em;color:var(--mute);margin-left:1px}
-.hero .affil{color:var(--mute);font-size:15px;margin:0 0 4px}
-.hero .marks{color:var(--mute);font-size:13.5px;margin:0 0 26px}
-.abstract{font-family:var(--serif);font-size:17.5px;line-height:1.65;margin:0}
-.bib{position:relative;padding:18px 20px}
-.bib pre{margin:0;font:13px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word;color:var(--ink)}
-.bib .ibtn{position:absolute;top:12px;right:12px}
 /* sections */
 section{padding:56px 0;scroll-margin-top:64px}
 section.alt{background:var(--bg2)}
@@ -79,6 +68,8 @@ figure{margin:0}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 @media (max-width:860px){.grid3,.grid2{grid-template-columns:1fr}}
+.mapgrid{grid-template-columns:var(--mapcols);align-items:start}
+@media (max-width:860px){.mapgrid{grid-template-columns:1fr}}
 .tile{padding:22px 22px 20px;position:relative;overflow:hidden}
 .tile:before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--acc1),var(--acc2))}
 .tile h4{margin:4px 0 8px;font-size:18px;letter-spacing:-.01em}
@@ -207,13 +198,38 @@ caption{caption-side:top;text-align:left;font-size:13.5px;color:var(--mute);padd
 .blegend{font-size:12px;color:var(--mute);margin:0 0 6px}
 .blegend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 4px 0 10px;vertical-align:-1px}
 footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px solid var(--line)}
+.btn.soon{opacity:.6;cursor:default;pointer-events:none}
+.btn.soon small{font:600 10.5px var(--mono);background:var(--soft);border-radius:999px;padding:2px 7px;color:var(--mute)}
+.hero{padding:88px 24px 48px}
+.hero .authors{font-size:17px;line-height:1.75;margin:0 0 8px}
+.hero .authors span{white-space:nowrap}
+.hero sup{font-size:.62em;color:var(--mute);margin-left:1px}
+.hero .affil{color:var(--mute);font-size:15px;margin:0 0 4px}
+.hero .marks{color:var(--mute);font-size:13.5px;margin:0 0 26px}
+.abs{margin-top:34px;padding:0}
+.abs summary{cursor:pointer;padding:15px 20px;font-weight:600;font-size:15.5px;list-style:none;display:flex;align-items:center;gap:10px;user-select:none}
+.abs summary::-webkit-details-marker{display:none}
+.abs summary::before{content:"▸";color:var(--mute);transition:transform .2s}
+.abs[open] summary::before{transform:rotate(90deg)}
+.abs p{margin:0;padding:0 20px 20px;font-family:var(--serif);font-size:17px;line-height:1.65}
+section{padding:88px 0}
+section#video{padding-top:40px}
+h2{margin:0 0 12px}
+.lead{margin:0 0 30px}
+h3{margin:48px 0 14px}
+.tile{padding:22px 22px 18px}
+.tile p{font-size:15.5px}
+.question{margin:48px 0 0}
+.bib{position:relative;padding:18px 20px}
+.bib pre{margin:0;font:13px/1.6 var(--mono);white-space:pre-wrap;word-break:break-word;color:var(--ink)}
+.bib .ibtn{position:absolute;top:12px;right:12px}
 </style>
 </head>
 <body>
 <nav><div class="wrap">
   <div class="brand"><span class="grad">Ego2Contact</span></div>
   <div class="links">
-    <a href="#video">Video</a><a href="#method">Method</a><a href="#human">Human touch</a><a href="#robot">Robot adaptation</a><a href="#sim">Simulation</a><a href="#real">Real robot</a><a href="#bibtex">BibTeX</a>
+    <a href="#video">Video</a><a href="#motivation">Motivation</a><a href="#human">Human touch</a><a href="#robot">Robot adaptation</a><a href="#sim">Simulation</a><a href="#real">Real robot</a><a href="#bibtex">BibTeX</a>
   </div>
   <button id="themeBtn" title="toggle theme">dark</button>
 </div></nav>
@@ -225,12 +241,8 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
   <p class="affil"><sup>1</sup>Carnegie Mellon University · <sup>2</sup>Texas A&amp;M University · <sup>3</sup>University of Wisconsin–Madison · <sup>4</sup>The University of Texas at Austin</p>
   <p class="marks"><sup>†</sup>Corresponding author</p>
   <div class="btns"><a class="btn primary" href="#video">▶&nbsp; Video</a><a class="btn" href="https://arxiv.org/abs/2610.22932" target="_blank" rel="noopener">Paper</a><a class="btn soon">Code <small>soon</small></a><a class="btn" href="#bibtex">BibTeX</a></div>
+  <details class="card abs"><summary>Abstract</summary><p>Contact locations and interaction forces are critical for contact-rich robot manipulation but are often ambiguous from vision alone. Measuring them on robots requires specialized tactile hardware and platform-specific data collection, which keeps robot tactile data scarce. Human egocentric video is far easier to scale but does not capture tactile information. Recent predictors trained on egocentric recordings paired with tactile-glove measurements can predict this missing signal from video alone. These predictors, however, remain confined to human hands, which differ from robot hands in appearance and tactile layout. We present Ego2Contact, which learns a visual–tactile prior from human interactions and transfers it to robot hands. Its predictor fuses temporal scene context with hand-local visual features to infer bimanual tactile fields from RGB video. Anatomical region correspondences align varying robot tactile layouts with the predictor's canonical grid, turning robot measurements into fine-tuning targets and predictions into policy inputs. Ego2Contact outperforms prior tactile predictors on human data, and on robot data after adaptation. The adapted predictor provides tactile inputs for both simulated reinforcement learning and real-robot policy post-training. Compared with training without tactile, predicted touch increases average success from 44.4% to 48.5% in simulation and from 27.5% to 45.0% on real robots, recovering part of the benefit of measured tactile. Human-learned tactile priors can thus supply touch when direct tactile sensing is limited.</p></details>
 </header>
-
-<section id="abstract" class="wrap" style="padding:30px 24px 10px">
-  <div class="over">Abstract</div>
-  <p class="abstract">Contact locations and interaction forces are critical for contact-rich robot manipulation but are often ambiguous from vision alone. Measuring them on robots requires specialized tactile hardware and platform-specific data collection, which keeps robot tactile data scarce. Human egocentric video is far easier to scale but does not capture tactile information. Recent predictors trained on egocentric recordings paired with tactile-glove measurements can predict this missing signal from video alone. These predictors, however, remain confined to human hands, which differ from robot hands in appearance and tactile layout. We present Ego2Contact, which learns a visual–tactile prior from human interactions and transfers it to robot hands. Its predictor fuses temporal scene context with hand-local visual features to infer bimanual tactile fields from RGB video. Anatomical region correspondences align varying robot tactile layouts with the predictor's canonical grid, turning robot measurements into fine-tuning targets and predictions into policy inputs. Ego2Contact outperforms prior tactile predictors on human data, and on robot data after adaptation. The adapted predictor provides tactile inputs for both simulated reinforcement learning and real-robot policy post-training. Compared with training without tactile, predicted touch increases average success from 44.4% to 48.5% in simulation and from 27.5% to 45.0% on real robots, recovering part of the benefit of measured tactile. Human-learned tactile priors can thus supply touch when direct tactile sensing is limited.</p>
-</section>
 
 <section id="video" class="wrap" style="padding-top:24px">
   <h2>Ego2Contact in 30 seconds</h2>
@@ -244,47 +256,28 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
   <p class="cap">A visual–tactile predictor is learned from paired human egocentric video and tactile measurements, fine-tuned to a dexterous robot hand through anatomical region correspondences, and used to supply touch for policy learning across four simulated and four real-world contact-rich tasks.</p>
 </section>
 
-<section id="method" class="wrap">
-  <h2>Method</h2>
+<section id="motivation" class="alt"><div class="wrap">
+  <h2>Touch is missing from the data that scales</h2>
   <div class="rule"></div>
-  <p class="lead">A flow-matching tactile predictor infers bimanual pressure fields on a canonical 21×21 hand grid from egocentric video. Anatomical region correspondences on that grid connect human supervision, robot sensors and policy inputs.</p>
-  <h3 style="margin-top:8px">Visual–tactile prediction model</h3>
-  <div class="sfigwrap" data-stages="6" data-caps="[&quot;An 8-frame egocentric clip and per-hand crops are the only inputs&quot;, &quot;Frozen DINOv2 encodes scene patches; frozen WiLoR encodes hand-local appearance&quot;, &quot;A temporal transformer aggregates scene tokens over the clip; hand tokens are pooled per hand&quot;, &quot;Hand tokens query the temporal scene features through cross-attention&quot;, &quot;A grid diffusion transformer generates the tactile field from Gaussian noise by flow matching&quot;, &quot;Output: bimanual 21\u00d721 pressure fields (217 valid cells per hand)&quot;]"><div class="sfig" style="aspect-ratio:3.1088"><img class="comp" data-stage="1" style="left:0.4923%;top:1.0204%;width:21.6083%" src="assets/sfig/prior/ego_frames.webp" alt=""><img class="comp" data-stage="1" style="left:0.3829%;top:46.5986%;width:21.7177%" src="assets/sfig/prior/hand_crops.webp" alt=""><img class="comp" data-stage="2" style="left:22.4289%;top:1.0204%;width:15.919%" src="assets/sfig/prior/feature_extractor.webp" alt=""><img class="comp" data-stage="3" style="left:38.512%;top:1.0204%;width:14.0044%" src="assets/sfig/prior/temporal.webp" alt=""><img class="comp" data-stage="3" style="left:38.512%;top:50.8503%;width:13.9497%" src="assets/sfig/prior/hand_tokens.webp" alt=""><img class="comp" data-stage="4" style="left:52.6805%;top:11.0544%;width:6.291%" src="assets/sfig/prior/cross_attention.webp" alt=""><img class="comp" data-stage="5" style="left:59.3545%;top:7.6531%;width:17.2319%" src="assets/sfig/prior/predictor.webp" alt=""><img class="comp" data-stage="6" style="left:76.8053%;top:10.7143%;width:22.593%" src="assets/sfig/prior/maps.webp" alt=""></div><div class="sctl"><button class="ibtn sprev" title="previous step">‹</button><div class="sdots"></div><button class="ibtn snext" title="next step">›</button><button class="ibtn splay" title="pause / play">❚❚</button><div class="scap"></div></div></div>
-  <h3>Robot adaptation and policy learning</h3>
-  <div class="sfigwrap" data-stages="5" data-caps="[&quot;Paired robot video and tactile measurements are collected (simulator contact forces or real-glove taxels)&quot;, &quot;Anatomical correspondences map the robot measurements onto the canonical 21\u00d721 grid as fine-tuning targets&quot;, &quot;The human-trained predictor is fine-tuned on the robot data under the same flow-matching objective&quot;, &quot;The adapted predictor outputs robot tactile grids, mapped back into policy-compatible inputs&quot;, &quot;Visual, proprioceptive and tactile encoders feed policy learning (PPO in simulation, VLA post-training on the real robot)&quot;]"><div class="sfig" style="aspect-ratio:3.7474"><img class="comp" data-stage="1" style="left:0.6027%;top:0.8214%;width:21.3151%" src="assets/sfig/adapt/rgb_frames.webp" alt=""><img class="comp" data-stage="1" style="left:0.6027%;top:50.7187%;width:21.7534%" src="assets/sfig/adapt/tactile_meas.webp" alt=""><img class="comp" data-stage="2" style="left:22.2466%;top:39.0144%;width:12.2192%" src="assets/sfig/adapt/anat.webp" alt=""><img class="comp" data-stage="2" style="left:35.2877%;top:44.7639%;width:9.6438%" src="assets/sfig/adapt/paired_sup.webp" alt=""><img class="comp" data-stage="3" style="left:22.7945%;top:27.7207%;width:20.0%" src="assets/sfig/adapt/arrow_rgb.webp" alt=""><img class="comp" data-stage="3" style="left:44.5479%;top:15.1951%;width:7.5068%" src="assets/sfig/adapt/predictor.webp" alt=""><img class="comp" data-stage="4" style="left:51.8904%;top:47.4333%;width:2.6849%" src="assets/sfig/adapt/pred_arrow.webp" alt=""><img class="comp" data-stage="4" style="left:54.2466%;top:11.0883%;width:17.6438%" src="assets/sfig/adapt/pred_tactile.webp" alt=""><img class="comp" data-stage="5" style="left:22.5753%;top:3.9014%;width:76.4384%" src="assets/sfig/adapt/policy.webp" alt=""></div><div class="sctl"><button class="ibtn sprev" title="previous step">‹</button><div class="sdots"></div><button class="ibtn snext" title="next step">›</button><button class="ibtn splay" title="pause / play">❚❚</button><div class="scap"></div></div></div>
-</section>
+  <div class="grid3">
+    <div class="card tile"><div class="num">01</div><h4>Contact is ambiguous from vision alone.</h4><p>Where contact occurs and how force evolves is not visible in a single image or hand pose.</p></div>
+    <div class="card tile"><div class="num">02</div><h4>Robot tactile data is scarce.</h4><p>Tactile sensors are hard to integrate and tied to one end-effector, so recordings rarely scale or transfer.</p></div>
+    <div class="card tile"><div class="num">03</div><h4>Human video scales, but records no touch.</h4><p>Glove datasets pair egocentric video with dense pressure, yet their predictors do not drive a robot policy.</p></div>
+  </div>
+  <p class="question">Can a tactile prior learned from <span class="grad">human video</span> supply explicit touch observations that <span class="grad">robot policies</span> can consume?</p>
+</div></section>
 
 <section id="human" class="alt"><div class="wrap">
   <h2>Predicting touch from human video</h2>
   <div class="rule"></div>
-  <p class="lead">On EgoTouch, Ego2Contact outperforms the TouchAnything baseline and a pose-conditioned variant on both seen and unseen objects.</p>
-  <div class="tbl card"><table>
-    <caption>Human tactile prediction on EgoTouch (best per column in bold).</caption>
-    <thead><tr><th rowspan="2">Method</th><th colspan="4">Seen objects</th><th colspan="4">Unseen objects</th></tr>
-    <tr><th>C.IoU ↑</th><th>V.IoU ↑</th><th>T.Acc ↑</th><th>MAE ↓</th><th>C.IoU ↑</th><th>V.IoU ↑</th><th>T.Acc ↑</th><th>MAE ↓</th></tr></thead>
-    <tbody>
-    <tr><td>TouchAnything</td><td>0.5064</td><td>0.4260</td><td>0.8899</td><td>0.0485</td><td>0.4720</td><td><b>0.3457</b></td><td>0.8382</td><td>0.0641</td></tr>
-    <tr><td>Ego2Contact (pose)</td><td>0.5657</td><td>0.4899</td><td>0.9014</td><td>0.0385</td><td>0.4441</td><td>0.3183</td><td>0.8122</td><td>0.0596</td></tr>
-    <tr class="ours"><td><b>Ego2Contact</b></td><td><b>0.5735</b></td><td><b>0.4961</b></td><td><b>0.9018</b></td><td><b>0.0383</b></td><td><b>0.4812</b></td><td>0.3417</td><td><b>0.8544</b></td><td><b>0.0590</b></td></tr>
-    </tbody></table></div>
-  <h3>Prediction videos</h3>
-  <p class="lead" style="margin-bottom:14px">RGB input (left) and the 21×21 pressure grids of both hands (right): ground truth on top, prediction below. Click a clip to enlarge it.</p>
+  <p class="lead">Ego2Contact outperforms the TouchAnything baseline and a pose-conditioned variant on seen and unseen objects of EgoTouch. Each clip shows the RGB input (left) and the 21×21 pressure grids of both hands (right): ground truth on top, prediction below. Click a clip to enlarge it.</p>
   <div class="vgrid" id="humanGrid"></div>
 </div></section>
 
 <section id="robot" class="wrap">
   <h2>Adapting the predictor to robot hands</h2>
   <div class="rule"></div>
-  <p class="lead">The predictor is fine-tuned on paired RGB and contact forces from simulated robot rollouts. Grid contact IoU on held-out robot episodes rises from 0.008 to 0.476, with better contact placement than the adapted TouchAnything baseline.</p>
-  <div class="tbl card"><table>
-    <caption>Robot tactile prediction after adaptation to simulation (held-out episodes).</caption>
-    <thead><tr><th>Method</th><th>C.IoU ↑</th><th>V.IoU ↑</th><th>MAE ↓</th><th>T.Acc ↑</th><th>Link C.IoU ↑</th><th>Link CoP ↓</th></tr></thead>
-    <tbody>
-    <tr><td>TouchAnything</td><td>0.415</td><td>0.384</td><td><b>0.0025</b></td><td><b>0.992</b></td><td>0.520</td><td>0.300</td></tr>
-    <tr class="ours"><td><b>Ego2Contact</b></td><td><b>0.476</b></td><td><b>0.440</b></td><td><b>0.0025</b></td><td>0.991</td><td><b>0.571</b></td><td><b>0.224</b></td></tr>
-    </tbody></table></div>
-  <h3>Predicted touch on the simulated hand, frame by frame</h3>
-  <p class="lead">Ground truth vs. prediction on held-out simulator episodes: the 21×21 grid, the hand surface, and the 17 link regions the RL policy consumes.</p>
+  <p class="lead">The predictor is fine-tuned on paired RGB and contact forces from simulated robot rollouts. Browse ground truth vs. prediction on held-out episodes: the 21×21 grid, the hand surface, and the 17 link regions the RL policy consumes.</p>
   <div class="card viewer" id="viewer">
     <div class="vctl">
       <span><label>Task</label><span class="seg" id="simTask"></span></span>
@@ -308,19 +301,12 @@ footer{padding:34px 0 50px;color:var(--mute);font-size:13.5px;border-top:1px sol
   <div class="vgrid4" id="simCards"></div>
   <p class="cap" style="margin:10px 0 28px">Successful executions of the four simulated tasks.</p>
   <h3>Policy success rate</h3>
-  <div class="grid2 simres">
-    <div class="card chart">
+  <div class="card chart" style="padding:24px 26px 14px">
       <div class="legend" id="simLegend"><span><i style="background:var(--gray)"></i>Proprio only</span><span><i style="background:var(--violet)"></i>+ Predicted tactile</span><span><i style="background:var(--teal)"></i>+ GT tactile</span></div>
       <div class="bars-chart" id="simChart"></div>
       <div class="blabels"><span>Pen cap removal</span><span>Lever sliding</span><span>Bottle cap turning</span><span>Bimanual handover</span></div>
-      <div class="foot"><span></span><button class="ibtn" id="chartReplay">↻ replay</button></div>
+      <div class="foot"><span>Success rate (%), averaged over 4 seeds.</span><button class="ibtn" id="chartReplay">↻ replay</button></div>
     </div>
-    <div class="tbl card"><table>
-      <caption>Success rate (%), averaged over 4 seeds.</caption>
-      <thead><tr><th>Task</th><th>Proprio</th><th>+ Predicted</th><th>+ GT</th></tr></thead>
-      <tbody><tr><td>Pen cap removal</td><td>0.0</td><td>1.0</td><td>95.0</td></tr><tr><td>Lever sliding</td><td>84.0</td><td>88.8</td><td>98.2</td></tr><tr><td>Bottle cap turning</td><td>64.1</td><td>71.0</td><td>74.1</td></tr><tr><td>Bimanual handover</td><td>29.3</td><td>33.1</td><td>49.1</td></tr></tbody></table>
-    </div>
-  </div>
 </div></section>
 
 <section id="real" class="wrap">
