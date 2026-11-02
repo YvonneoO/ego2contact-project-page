@@ -110,7 +110,9 @@ caption{caption-side:top;text-align:left;font-size:13.5px;color:var(--mute);padd
 @media (max-width:900px){.vgrid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.vgrid{grid-template-columns:1fr}}
 .vcard{padding:8px;cursor:zoom-in}
-.vcard video{width:100%;border-radius:8px;background:#000;pointer-events:none}
+.vcard .pv{position:relative;aspect-ratio:1050/578;background:#000;border-radius:8px;overflow:hidden}
+.vcard .pv img{width:100%;height:100%;object-fit:cover}
+.vcard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:rgba(10,12,20,.6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;padding-left:4px;pointer-events:none}
 .vcard .vt{display:flex;justify-content:space-between;align-items:center;padding:8px 4px 2px;font-size:14px;font-weight:600}
 .vcard .vt span{font:12px var(--mono);color:var(--mute)}
 .vgrid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -248,11 +250,11 @@ h3{margin:48px 0 14px}
   <h2>Ego2Contact in 30 seconds</h2>
   <div class="rule"></div>
   <figure class="card player">
-    <video id="ov" src="assets/video/overview.mp4" poster="assets/poster/overview.webp" muted autoplay playsinline controls></video>
+    <video id="ov" src="assets/video/overview.mp4" poster="assets/poster/overview.webp" playsinline controls preload="metadata"></video>
     <div class="vmeta"><span>0:30 · no sound · on-screen captions</span><span><a href="#" id="ovReplay">↻ replay</a></span></div>
   </figure>
   <h3>From human touch to robot manipulation</h3>
-  <div class="sfigwrap" data-stages="6" data-caps="[&quot;Human egocentric video paired with glove-measured touch&quot;, &quot;A tactile predictor learns to infer bimanual pressure fields from video alone&quot;, &quot;The predictor is fine-tuned on paired robot video and tactile measurements&quot;, &quot;Anatomical correspondences connect robot sensors with the canonical hand layout&quot;, &quot;Predicted touch serves as a virtual tactile sensor for RL policies in simulation&quot;, &quot;and provides tactile annotations for VLA post-training on a real dexterous hand&quot;]"><div class="sfig" style="aspect-ratio:2.1056"><img class="comp" data-stage="1" style="left:3.6056%;top:2.2539%;width:27.9437%" src="assets/sfig/teaser/h_title.webp" alt=""><img class="comp" data-stage="1" style="left:4.7887%;top:11.981%;width:25.9155%" src="assets/sfig/teaser/h_input.webp" alt=""><img class="comp" data-stage="2" style="left:17.2958%;top:36.7734%;width:0.6761%" src="assets/sfig/teaser/h_arrow1.webp" alt=""><img class="comp" data-stage="2" style="left:2.4225%;top:41.2811%;width:9.8592%" src="assets/sfig/teaser/h_sup.webp" alt=""><img class="comp" data-stage="2" style="left:8.7324%;top:43.7722%;width:16.338%" src="assets/sfig/teaser/h_predictor.webp" alt=""><img class="comp" data-stage="2" style="left:17.4648%;top:55.7533%;width:0.6761%" src="assets/sfig/teaser/h_arrow2.webp" alt=""><img class="comp" data-stage="2" style="left:3.3803%;top:64.7687%;width:28.6197%" src="assets/sfig/teaser/h_output.webp" alt=""><img class="comp" data-stage="2" style="left:26.9296%;top:92.5267%;width:29.2958%" src="assets/sfig/teaser/colorbar.webp" alt=""><img class="comp" data-stage="3" style="left:27.5493%;top:44.7212%;width:10.8732%" src="assets/sfig/teaser/fine_tune.webp" alt=""><img class="comp" data-stage="3" style="left:34.4225%;top:2.3725%;width:27.9437%" src="assets/sfig/teaser/r_title.webp" alt=""><img class="comp" data-stage="3" style="left:38.4789%;top:11.981%;width:24.2254%" src="assets/sfig/teaser/r_input.webp" alt=""><img class="comp" data-stage="3" style="left:48.0563%;top:36.7734%;width:0.6761%" src="assets/sfig/teaser/r_arrow1.webp" alt=""><img class="comp" data-stage="3" style="left:39.3803%;top:43.1791%;width:17.1268%" src="assets/sfig/teaser/r_predictor.webp" alt=""><img class="comp" data-stage="3" style="left:53.5211%;top:41.2811%;width:9.8592%" src="assets/sfig/teaser/r_sup.webp" alt=""><img class="comp" data-stage="4" style="left:48.1127%;top:55.7533%;width:0.6761%" src="assets/sfig/teaser/r_arrow2.webp" alt=""><img class="comp" data-stage="4" style="left:34.9859%;top:65.0059%;width:26.5915%" src="assets/sfig/teaser/r_output.webp" alt=""><img class="comp" data-stage="5" style="left:65.2394%;top:2.1352%;width:34.0282%" src="assets/sfig/teaser/d_title.webp" alt=""><img class="comp" data-stage="5" style="left:65.7465%;top:10.4389%;width:33.3521%" src="assets/sfig/teaser/d_sim.webp" alt=""><img class="comp" data-stage="6" style="left:65.7465%;top:51.8387%;width:33.0704%" src="assets/sfig/teaser/d_real.webp" alt=""></div><div class="sctl"><button class="ibtn sprev" title="previous step">‹</button><div class="sdots"></div><button class="ibtn snext" title="next step">›</button><button class="ibtn splay" title="pause / play">❚❚</button><div class="scap"></div></div></div>
+  <div class="sfigwrap" data-stages="6" data-caps="[&quot;Human egocentric video paired with glove-measured touch&quot;, &quot;A tactile predictor learns to infer bimanual pressure fields from video alone&quot;, &quot;The predictor is fine-tuned on paired robot video and tactile measurements&quot;, &quot;Anatomical correspondences connect robot sensors with the canonical hand layout&quot;, &quot;Predicted touch serves as a virtual tactile sensor for RL policies in simulation&quot;, &quot;and provides tactile annotations for VLA post-training on a real dexterous hand&quot;]"><div class="sfig" style="aspect-ratio:2.1056"><img class="comp" data-stage="1" style="left:3.6056%;top:2.2539%;width:27.9437%" src="assets/sfig/teaser/h_title.webp" alt="" loading="lazy"><img class="comp" data-stage="1" style="left:4.7887%;top:11.981%;width:25.9155%" src="assets/sfig/teaser/h_input.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:17.2958%;top:36.7734%;width:0.6761%" src="assets/sfig/teaser/h_arrow1.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:2.4225%;top:41.2811%;width:9.8592%" src="assets/sfig/teaser/h_sup.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:8.7324%;top:43.7722%;width:16.338%" src="assets/sfig/teaser/h_predictor.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:17.4648%;top:55.7533%;width:0.6761%" src="assets/sfig/teaser/h_arrow2.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:3.3803%;top:64.7687%;width:28.6197%" src="assets/sfig/teaser/h_output.webp" alt="" loading="lazy"><img class="comp" data-stage="2" style="left:26.9296%;top:92.5267%;width:29.2958%" src="assets/sfig/teaser/colorbar.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:27.5493%;top:44.7212%;width:10.8732%" src="assets/sfig/teaser/fine_tune.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:34.4225%;top:2.3725%;width:27.9437%" src="assets/sfig/teaser/r_title.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:38.4789%;top:11.981%;width:24.2254%" src="assets/sfig/teaser/r_input.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:48.0563%;top:36.7734%;width:0.6761%" src="assets/sfig/teaser/r_arrow1.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:39.3803%;top:43.1791%;width:17.1268%" src="assets/sfig/teaser/r_predictor.webp" alt="" loading="lazy"><img class="comp" data-stage="3" style="left:53.5211%;top:41.2811%;width:9.8592%" src="assets/sfig/teaser/r_sup.webp" alt="" loading="lazy"><img class="comp" data-stage="4" style="left:48.1127%;top:55.7533%;width:0.6761%" src="assets/sfig/teaser/r_arrow2.webp" alt="" loading="lazy"><img class="comp" data-stage="4" style="left:34.9859%;top:65.0059%;width:26.5915%" src="assets/sfig/teaser/r_output.webp" alt="" loading="lazy"><img class="comp" data-stage="5" style="left:65.2394%;top:2.1352%;width:34.0282%" src="assets/sfig/teaser/d_title.webp" alt="" loading="lazy"><img class="comp" data-stage="5" style="left:65.7465%;top:10.4389%;width:33.3521%" src="assets/sfig/teaser/d_sim.webp" alt="" loading="lazy"><img class="comp" data-stage="6" style="left:65.7465%;top:51.8387%;width:33.0704%" src="assets/sfig/teaser/d_real.webp" alt="" loading="lazy"></div><div class="sctl"><button class="ibtn sprev" title="previous step">‹</button><div class="sdots"></div><button class="ibtn snext" title="next step">›</button><button class="ibtn splay" title="pause / play">❚❚</button><div class="scap"></div></div></div>
   <p class="cap">A visual–tactile predictor is learned from paired human egocentric video and tactile measurements, fine-tuned to a dexterous robot hand through anatomical region correspondences, and used to supply touch for policy learning across four simulated and four real-world contact-rich tasks.</p>
 </section>
 
@@ -375,26 +377,22 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible&&!done&&!timer&&s<n)start();},{threshold:.3}).observe(w);
  show(1);
 });
-// human video grid + lightbox
+// human video grid + lightbox (cards show a lazily loaded poster; the clip loads only when opened)
 (function(){const g=$('humanGrid');
  HUMAN.forEach((h,i)=>{const c=document.createElement('figure');c.className='card vcard';
-  c.innerHTML=`<video src="${h.src}" poster="${h.poster}" muted loop playsinline preload="metadata"></video><div class="vt">${h.title}<span>${h.duration.toFixed(1)} s</span></div>`;
+  c.innerHTML=`<div class="pv"><img data-src="${h.poster}" alt="${h.title}"><span class="play">▶</span></div><div class="vt">${h.title}<span>${h.duration.toFixed(1)} s</span></div>`;
   c.onclick=()=>open(i);g.append(c);});
- const vids=[...g.querySelectorAll('video')];
- new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting)v.play().catch(()=>{});else v.pause();}),{threshold:.2}).forEach?0:0;
- const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting)v.play().catch(()=>{});else v.pause();}),{threshold:.2});vids.forEach(v=>io.observe(v));
  const lb=$('lb'),lv=$('lbVid');
- function open(i){const h=HUMAN[i];vids.forEach(v=>v.pause());lv.src=h.src;lv.poster=h.poster;$('lbTitle').textContent=h.title;$('lbMeta').textContent=`${h.duration.toFixed(1)} s · left: RGB input · right: ground truth (top) vs prediction (bottom)`;lb.hidden=false;document.body.style.overflow='hidden';lv.play().catch(()=>{});}
- function close(){lb.hidden=true;lv.pause();lv.removeAttribute('src');lv.load();document.body.style.overflow='';vids.forEach(v=>{const r=v.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)v.play().catch(()=>{});});}
+ function open(i){const h=HUMAN[i];lv.src=h.src;lv.poster=h.poster;$('lbTitle').textContent=h.title;$('lbMeta').textContent=`${h.duration.toFixed(1)} s · left: RGB input · right: ground truth (top) vs prediction (bottom)`;lb.hidden=false;document.body.style.overflow='hidden';lv.play().catch(()=>{});}
+ function close(){lb.hidden=true;lv.pause();lv.removeAttribute('src');lv.load();document.body.style.overflow='';}
  $('lbClose').onclick=close;lb.addEventListener('click',e=>{if(e.target===lb)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)close();});
 })();
 // robot cards
 (function(){const host=$('robotCards');for(const r of ROBOT){const c=document.createElement('figure');c.className='card rcard';
- c.innerHTML=`<video src="${r.src}" poster="${r.poster}" muted playsinline controls preload="metadata"></video><h4>${r.title}</h4><p>${r.desc}</p>`;host.append(c);}})();
-// simulated task clips (play while visible)
+ c.innerHTML=`<video data-src="${r.src}" data-poster="${r.poster}" muted playsinline controls preload="none"></video><h4>${r.title}</h4><p>${r.desc}</p>`;host.append(c);}})();
+// simulated task clips (click to play; loop while playing)
 (function(){const host=$('simCards');for(const t of SIMVID){const c=document.createElement('figure');c.className='card scard';
- c.innerHTML=`<video src="${t.src}" poster="${t.poster}" muted loop playsinline preload="metadata"></video><div class="vt">${t.title}<span>${t.meta}</span></div>`;host.append(c);}
- const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting)v.play().catch(()=>{});else v.pause();}),{threshold:.2});host.querySelectorAll('video').forEach(v=>io.observe(v));})();
+ c.innerHTML=`<video data-src="${t.src}" data-poster="${t.poster}" muted loop playsinline controls preload="none"></video><div class="vt">${t.title}<span>${t.meta}</span></div>`;host.append(c);}})();
 // sim chart (animated: P, then P + Pred-Tac, then P + GT-Tac)
 (function(){const V=[[0,1,95],[84,88.8,98.2],[64.1,71,74.1],[29.3,33.1,49.1]];const host=$('simChart'),leg=[...$('simLegend').children];
  for(const g of V){const d=document.createElement('div');d.className='bgroup';['base','pred','gt'].forEach((c,i)=>{const b=document.createElement('div');b.className='bar '+c;b.innerHTML=`<span>${g[i]}</span>`;d.append(b);});host.append(d);}
@@ -411,14 +409,15 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
  const SPLIT={val:'held-out validation episode',unseen:'episode not in fine-tune data',train:'fine-tune training episode'};
  function setSeg(id,v){[...$(id).children].forEach(b=>b.classList.toggle('on',b.dataset.v===v));}
  function best(s){let b=0,bv=-1;s.frames.forEach((f,i)=>{let t=0;for(const h of s.hands){const g=s.links[String(f)][h].GT;for(const k in g)t+=g[k];}if(t>bv){bv=t;b=i;}});return b;}
- function build(){const s=cur();
+ function build(){built=true;const s=cur();
   if(S.hand!=='both'&&!s.hands.includes(S.hand))S.hand='both';
   [...$('simHand').children].forEach(b=>b.style.display=(b.dataset.v==='both'||s.hands.includes(b.dataset.v))?'':'none');
   setSeg('simTask',S.task);setSeg('simHand',S.hand);setSeg('simRep',S.rep);
   $('simRange').max=s.frames.length-1;$('simRange').value=S.fi;
   $('simThumbs').innerHTML=s.frames.map((f,i)=>`<button data-i="${i}" class="${i===S.fi?'on':''}"><img src="${s.img['rgb_'+pad(f)]}"><span>${f}</span></button>`).join('');
   render();}
- function render(){const s=cur(),f=s.frames[S.fi];
+ let built=false;
+ function render(){if(!built)return;const s=cur(),f=s.frames[S.fi];
   $('simLab').textContent=`frame ${f} (${S.fi+1}/${s.frames.length}) of ${s.T}`;
   $('simMeta').textContent=`${s.episode.replace('episode_','episode ')} · ${SPLIT[s.split]||''} · v_max ${Math.round(s.vmax).toLocaleString()} Pa`;
   $('simRgb').src=s.img['rgb_'+pad(f)];
@@ -442,8 +441,11 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
  $('simNext').onclick=()=>{S.fi=Math.min(cur().frames.length-1,S.fi+1);$('simRange').value=S.fi;render();};
  $('simThumbs').onclick=e=>{const b=e.target.closest('button');if(b){S.fi=+b.dataset.i;$('simRange').value=S.fi;render();}};
  document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type!=='range')return;if(!$('lb').hidden)return;if(e.key==='ArrowRight')$('simNext').click();if(e.key==='ArrowLeft')$('simPrev').click();});
- S.task=Object.keys(SIM.tasks)[0];S.fi=best(cur());build();
+ S.task=Object.keys(SIM.tasks)[0];S.fi=best(cur());
+ const vio=new IntersectionObserver(es=>{if(es[0].isIntersecting){vio.disconnect();build();}},{rootMargin:'400px 0px'});vio.observe($('viewer'));
 })();
+// lazy media: src/poster are assigned only when an element comes within 400 px of the viewport
+(function(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);if(el.dataset.poster)el.poster=el.dataset.poster;if(el.dataset.src)el.src=el.dataset.src;}),{rootMargin:'400px 0px'});document.querySelectorAll('[data-src],[data-poster]').forEach(el=>io.observe(el));})();
 </script>
 </body>
 </html>
