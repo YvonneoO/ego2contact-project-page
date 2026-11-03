@@ -109,10 +109,13 @@ caption{caption-side:top;text-align:left;font-size:13.5px;color:var(--mute);padd
 .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:900px){.vgrid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.vgrid{grid-template-columns:1fr}}
-.vcard{padding:8px;cursor:zoom-in}
-.vcard .pv{position:relative;aspect-ratio:1050/578;background:#000;border-radius:8px;overflow:hidden}
-.vcard .pv img{width:100%;height:100%;object-fit:cover}
+.vcard{padding:8px}
+.vcard .pv{position:relative;aspect-ratio:1050/578;background:#000;border-radius:8px;overflow:hidden;cursor:pointer}
+.vcard .pv video{width:100%;height:100%;object-fit:cover;display:block}
 .vcard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:rgba(10,12,20,.6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;padding-left:4px;pointer-events:none}
+.pv.playing .play{display:none}
+.pv .zoom{position:absolute;right:8px;top:8px;width:30px;height:30px;border:0;border-radius:50%;background:rgba(10,12,20,.6);color:#fff;font-size:15px;line-height:30px;padding:0;cursor:zoom-in;opacity:.85}
+.pv .zoom:hover{opacity:1}
 .vcard .vt{display:flex;justify-content:space-between;align-items:center;padding:8px 4px 2px;font-size:14px;font-weight:600}
 .vcard .vt span{font:12px var(--mono);color:var(--mute)}
 .vgrid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -250,7 +253,7 @@ h3{margin:48px 0 14px}
   <h2>Ego2Contact in 30 seconds</h2>
   <div class="rule"></div>
   <figure class="card player">
-    <video id="ov" src="assets/video/overview.mp4" poster="assets/poster/overview.webp" playsinline controls preload="metadata"></video>
+    <video id="ov" class="clip" src="assets/video/overview.mp4" poster="assets/poster/overview.webp" muted playsinline controls preload="metadata"></video>
     <div class="vmeta"><span>0:30 · no sound · on-screen captions</span><span><a href="#" id="ovReplay">↻ replay</a></span></div>
   </figure>
   <h3>From human touch to robot manipulation</h3>
@@ -272,7 +275,7 @@ h3{margin:48px 0 14px}
 <section id="human" class="alt"><div class="wrap">
   <h2>Predicting touch from human video</h2>
   <div class="rule"></div>
-  <p class="lead">Ego2Contact outperforms the TouchAnything baseline and a pose-conditioned variant on seen and unseen objects of EgoTouch. Each clip shows the RGB input (left) and the 21×21 pressure grids of both hands (right): ground truth on top, prediction below. Click a clip to enlarge it.</p>
+  <p class="lead">Ego2Contact outperforms the TouchAnything baseline and a pose-conditioned variant on seen and unseen objects of EgoTouch. Each clip shows the RGB input (left) and the 21×21 pressure grids of both hands (right): ground truth on top, prediction below. Clips play while in view; click one to pause or resume it, or press ⤢ to enlarge it.</p>
   <div class="vgrid" id="humanGrid"></div>
 </div></section>
 
@@ -377,11 +380,11 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible&&!done&&!timer&&s<n)start();},{threshold:.3}).observe(w);
  show(1);
 });
-// human video grid + lightbox (cards show a lazily loaded poster; the clip loads only when opened)
+// human video grid: inline clips (play muted while in view, click pauses/resumes) + ⤢ opens the clip in the lightbox
 (function(){const g=$('humanGrid');
  HUMAN.forEach((h,i)=>{const c=document.createElement('figure');c.className='card vcard';
-  c.innerHTML=`<div class="pv"><img data-src="${h.poster}" alt="${h.title}"><span class="play">▶</span></div><div class="vt">${h.title}<span>${h.duration.toFixed(1)} s</span></div>`;
-  c.onclick=()=>open(i);g.append(c);});
+  c.innerHTML=`<div class="pv"><video class="clip" data-src="${h.src}" data-poster="${h.poster}" muted loop playsinline preload="none"></video><span class="play">▶</span><button class="zoom" title="enlarge">⤢</button></div><div class="vt">${h.title}<span>${h.duration.toFixed(1)} s</span></div>`;
+  c.querySelector('.zoom').onclick=e=>{e.stopPropagation();open(i);};g.append(c);});
  const lb=$('lb'),lv=$('lbVid');
  function open(i){const h=HUMAN[i];lv.src=h.src;lv.poster=h.poster;$('lbTitle').textContent=h.title;$('lbMeta').textContent=`${h.duration.toFixed(1)} s · left: RGB input · right: ground truth (top) vs prediction (bottom)`;lb.hidden=false;document.body.style.overflow='hidden';lv.play().catch(()=>{});}
  function close(){lb.hidden=true;lv.pause();lv.removeAttribute('src');lv.load();document.body.style.overflow='';}
@@ -389,10 +392,10 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
 })();
 // robot cards
 (function(){const host=$('robotCards');for(const r of ROBOT){const c=document.createElement('figure');c.className='card rcard';
- c.innerHTML=`<video data-src="${r.src}" data-poster="${r.poster}" muted playsinline controls preload="none"></video><h4>${r.title}</h4><p>${r.desc}</p>`;host.append(c);}})();
-// simulated task clips (click to play; loop while playing)
+ c.innerHTML=`<video class="clip" data-src="${r.src}" data-poster="${r.poster}" muted loop playsinline controls preload="none"></video><h4>${r.title}</h4><p>${r.desc}</p>`;host.append(c);}})();
+// simulated task clips
 (function(){const host=$('simCards');for(const t of SIMVID){const c=document.createElement('figure');c.className='card scard';
- c.innerHTML=`<video data-src="${t.src}" data-poster="${t.poster}" muted loop playsinline controls preload="none"></video><div class="vt">${t.title}<span>${t.meta}</span></div>`;host.append(c);}})();
+ c.innerHTML=`<video class="clip" data-src="${t.src}" data-poster="${t.poster}" muted loop playsinline controls preload="none"></video><div class="vt">${t.title}<span>${t.meta}</span></div>`;host.append(c);}})();
 // sim chart (animated: P, then P + Pred-Tac, then P + GT-Tac)
 (function(){const V=[[0,1,95],[84,88.8,98.2],[64.1,71,74.1],[29.3,33.1,49.1]];const host=$('simChart'),leg=[...$('simLegend').children];
  for(const g of V){const d=document.createElement('div');d.className='bgroup';['base','pred','gt'].forEach((c,i)=>{const b=document.createElement('div');b.className='bar '+c;b.innerHTML=`<span>${g[i]}</span>`;d.append(b);});host.append(d);}
@@ -445,7 +448,17 @@ document.querySelectorAll('.sfigwrap').forEach(w=>{
  const vio=new IntersectionObserver(es=>{if(es[0].isIntersecting){vio.disconnect();build();}},{rootMargin:'400px 0px'});vio.observe($('viewer'));
 })();
 // lazy media: src/poster are assigned only when an element comes within 400 px of the viewport
-(function(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);if(el.dataset.poster)el.poster=el.dataset.poster;if(el.dataset.src)el.src=el.dataset.src;}),{rootMargin:'400px 0px'});document.querySelectorAll('[data-src],[data-poster]').forEach(el=>io.observe(el));})();
+(function(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;io.unobserve(el);if(el.dataset.poster&&!el.getAttribute('poster'))el.poster=el.dataset.poster;if(el.dataset.src&&!el.getAttribute('src'))el.src=el.dataset.src;}),{rootMargin:'400px 0px'});document.querySelectorAll('[data-src],[data-poster]').forEach(el=>io.observe(el));})();
+// clips play (muted) while at least 40% visible and pause when scrolled away; a pause by the viewer holds until they play it again
+(function(){
+ function autoPause(v){if(!v.paused){v.dataset.ap='1';v.pause();}}
+ const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.intersectionRatio>=.4){if(v.dataset.src&&!v.getAttribute('src')){if(v.dataset.poster)v.poster=v.dataset.poster;v.src=v.dataset.src;}if(!v.dataset.hold&&!v.ended)v.play().catch(()=>{});}else autoPause(v);}),{threshold:[0,.4]});
+ document.querySelectorAll('video.clip').forEach(v=>{const w=v.parentElement;
+  v.addEventListener('play',()=>{w.classList.add('playing');delete v.dataset.hold;});
+  v.addEventListener('pause',()=>{w.classList.remove('playing');if(v.dataset.ap)delete v.dataset.ap;else if(v.readyState>0)v.dataset.hold='1';});
+  if(!v.controls)w.addEventListener('click',e=>{if(e.target.closest('.zoom'))return;if(v.paused)v.play().catch(()=>{});else v.pause();});
+  io.observe(v);});
+})();
 </script>
 </body>
 </html>
